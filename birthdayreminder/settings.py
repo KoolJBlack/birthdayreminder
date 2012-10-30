@@ -8,7 +8,7 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -16,6 +16,17 @@ DATABASES = {
         'USER': 'kacquah',
         'PASSWORD': 'take9000',
         'HOST': 'sql.mit.edu',
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '/home/kojo/Code/birthdayreminder/site.db',                      # Or path to database file if using sqlite3.
+        'USER': 'kojo',                      # Not used with sqlite3.
+        'PASSWORD': 'kojo',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -121,6 +132,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.admindocs',
+
+    'birthdays',
 )
 
 # A sample logging configuration. The only tangible logging
