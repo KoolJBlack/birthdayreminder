@@ -12,8 +12,12 @@ class User(models.Model):
   def __unicode__(self):
     return 'User(' + str(self.login) + ',' + str(self.pin) + ')'
 
+  def __str__(self):
+    return str(self.__unicode__())
+
 
 class Birthday(models.Model):
+  id = models.AutoField(primary_key=True)
   user = models.ForeignKey(User)
   last_letter = models.CharField(max_length=1)
   voice_name_url = models.URLField(max_length=500)
@@ -28,3 +32,6 @@ class Birthday(models.Model):
 
   def __unicode__(self):
     return 'Birthday:' + self.last_letter + '  date:' + str(self.date) + '  dur:' + str(durations[self.reminder_delta])
+
+  def __str__(self):
+    return str(self.__unicode__())
