@@ -1,7 +1,9 @@
 import datetime
+
 from django.utils import timezone
 from reminderduration import durations  # Table for determining reminder durations.
 from django.db import models
+
 
 class User(models.Model):
   login = models.PositiveIntegerField()
@@ -10,13 +12,13 @@ class User(models.Model):
   def __unicode__(self):
     return 'User(' + str(self.login) + ',' + str(self.pin) + ')'
 
+
 class Birthday(models.Model):
   user = models.ForeignKey(User)
   last_letter = models.CharField(max_length=1)
   voice_name_url = models.URLField(max_length=500)
   date = models.DateField('birthday date')
   reminder_delta = models.PositiveIntegerField()
-
 
   def is_reminder(self):
     """Returns true when a birthday has a reminder."""

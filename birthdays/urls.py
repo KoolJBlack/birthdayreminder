@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('birthdays.views',
-  url(r'^$', 'index'),  # Displays all info for the birthday site.
+                       
   url(r'^login$', 'login'),
   url(r'^new$', 'new_user'),
   url(r'^getlist$', 'get_birthdays_list'),
@@ -9,4 +9,5 @@ urlpatterns = patterns('birthdays.views',
   url(r'^delete$', 'delete_birthday'),
   url(r'^add$', 'add_birthday'),
   url(r'^reminder$', 'update_reminder'),
+
 )
