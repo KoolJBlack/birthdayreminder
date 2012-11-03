@@ -3,6 +3,7 @@ from birthdays.models import Birthday, User
 from django.template import Context, loader
 from django.http import HttpResponse
 
+from django.http import Http404
 
 def login(request):
   """
@@ -12,7 +13,26 @@ def login(request):
   
   Else, if login is not present on server, returns error message.
   """
-  return HttpResponse("login page")
+  # Get request parameters
+  print 'REQUEST: ',request.body, request.GET
+  
+  request_login = request.GET['login']
+  request_pin = request.GET['pin']
+  
+  # Retrieve user based on login, or raise error.
+  try:
+    u = User.objects.get(login=request_login)
+    # Check for correct pin.
+    if u.pin != int(request_pin):
+      print u.pin
+      print request_pin
+      raise Http404('Incorrect pin: ' + str(request_pin))
+  # Handle incorrect login.
+  except User.DoesNotExist:
+      raise Http404('Login: ' + str(request_login) + 'not found')
+  
+  # return render_to_response('birthdays/login.html', {'login': u.login})
+  return HttpResponse("Successful login!")
 
 
 def new_user(request):
