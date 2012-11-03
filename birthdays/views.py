@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.http import Http404
 
 import datetime
+from helper import is_int
 
 def login(request):
   """
@@ -150,6 +151,37 @@ def delete_birthday(request):
   return HttpResponse('Birthday deleted! ' + str(b))
 
 
+def get_birthdays(u, request_birthday_query):
+  """ Returns list of birthdays from user that fit query"""
+  # Get birthdays from user using query
+  try:
+    
+    if (is_int(request_birthday_query)):
+      print 'Its int'
+      # If request_birthday_query is int, filter by month,
+      request_birthday_query = int(request_birthday_query)
+      birthdays = u.birthday_set.all()
+      birthdays = filter(lambda x: x.is_month(request_birthday_query),
+                         birthdays)
+      
+    elif (request_birthday_query == 'all'):
+      print 'Its all'
+      # If request_birthday_query == all, don't filter,
+      birthdays = u.birthday_set.all()
+
+    else:
+      print 'Its letter'
+      # Else, filter by letter
+      birthdays = u.birthday_set.filter(last_letter=request_birthday_query)
+      
+  except Birthday.DoesNotExist:
+    raise Http404('Login: ' + str(request_login) +
+                  ' has no birthdays that fit query ' +
+                  request_birthday_id)
+  
+  return birthdays
+
+
 def get_birthdays_list(request):
   """
   Returns a list of birthdays that fit the given query:
@@ -159,7 +191,26 @@ def get_birthdays_list(request):
   If no birthdays are found, returns empty list.
   If user does not exist, returns error.
   """
-  return HttpResponse("get_birthdays_list page")
+  # Get request parameters
+  print 'REQUEST: ',request.body, request.GET
+  
+  request_login = request.GET['login']
+  request_birthday_query = request.GET['birthday_query']
+
+  # Retrieve user based on login, or raise error.
+  try:
+    u = User.objects.get(login=request_login)
+  # Handle incorrect login.
+  except User.DoesNotExist:
+      raise Http404('Login: ' + str(request_login) + 'not found')
+
+  # Get birthdays from user using query
+  birthdays = get_birthdays(u, request_birthday_query)
+   
+  s = ''
+  for b in birthdays:
+    s += str(b) + '\n'
+  return HttpResponse('Get birthdays : ' + s)
 
 
 def get_birthdays_pick(request):
@@ -180,7 +231,32 @@ def get_birthdays_pick(request):
   If user does not exist, returns error.
   If birthday number is not pickable in query, returns error.
   """
-  return HttpResponse("get_birthdays_pick page")
+  # Get request parameters
+  print 'REQUEST: ',request.body, request.GET
+  
+  request_login = request.GET['login']
+  request_birthday_query = request.GET['birthday_query']
+  request_birthday_num = int(request.GET['birthday_num'])
+
+  # Retrieve user based on login, or raise error.
+  try:
+    u = User.objects.get(login=request_login)
+  # Handle incorrect login.
+  except User.DoesNotExist:
+      raise Http404('Login: ' + str(request_login) + 'not found')
+
+  # Get birthdays from user using query
+  birthdays = get_birthdays(u, request_birthday_query)
+
+  # If request_num != -1, return specific birthday id
+  if request_birthday_num != -1:
+    b = list(birthdays)[request_birthday_num]
+    return HttpResponse('Pick birthday : ' + str(b.id))
+
+  s = ''
+  for b in birthdays:
+    s += str(b) + '\n'
+  return HttpResponse('Pick birthdays : ' + s)
 
 
 def update_reminder(request):
@@ -188,8 +264,30 @@ def update_reminder(request):
   Returns an acknowledgement if birthday's reminder was updated given:
     login
     birthdayID
-    reminder_duration
+    reminder_delta
 
   Returns error if user or birthday are not found.
   """
-  return HttpResponse("update_reminder page")
+  request_login = request.GET['login']
+  request_birthday_id = request.GET['birthday_id']
+  request_reminder_delta = int(request.GET['reminder_delta'])
+
+  # Retrieve user based on login, or raise error.
+  try:
+    u = User.objects.get(login=request_login)
+  # Handle incorrect login.
+  except User.DoesNotExist:
+      raise Http404('Login: ' + str(request_login) + 'not found')
+
+  # Get birthday from user
+  try: 
+    b = u.birthday_set.get(pk=request_birthday_id)
+  except Birthday.DoesNotExist:
+    raise Http404('Login: ' + str(request_login) +
+                  ' has no birthday_id: ' + request_birthday_id)
+
+  # Update reminder
+  b.reminder_delta = request_reminder_delta
+  b.save()
+  
+  return HttpResponse('Birthday updated! ' + str(b))

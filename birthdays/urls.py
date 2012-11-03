@@ -6,8 +6,8 @@ urlpatterns = patterns('birthdays.views',
   url(r'^new/$', 'new_user'),
   url(r'^add/$', 'add_birthday'),
   url(r'^delete/$', 'delete_birthday'),
-  url(r'^getlist/$', 'get_birthdays_list'),
-  url(r'^getpick/$', 'get_birthdays_pick'),
-  url(r'^reminder/$', 'update_reminder'),
+  url(r'^list/$', 'get_birthdays_list'),
+  url(r'^pick/$', 'get_birthdays_pick'),
+  url(r'^update/$', 'update_reminder'),
 
 )

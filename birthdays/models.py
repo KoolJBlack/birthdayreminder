@@ -30,6 +30,9 @@ class Birthday(models.Model):
     return self.date >= timezone.now().date() - durations[self.reminder_delta]  and \
            self.date <= timezone.now().date()
 
+  def is_month(self, month):
+    return self.date.month == month
+
   def __unicode__(self):
     return 'Birthday:' + self.last_letter + '  date:' + str(self.date) + '  dur:' + str(durations[self.reminder_delta])
 
