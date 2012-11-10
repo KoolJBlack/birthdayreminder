@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('birthdays.views',
-                       
+  url(r'^$', 'index'),                  
   url(r'^login/$', 'login'),
   url(r'^new/$', 'new_user'),
   url(r'^add/$', 'add_birthday'),

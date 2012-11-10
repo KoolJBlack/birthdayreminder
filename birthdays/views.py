@@ -1,11 +1,66 @@
 from birthdays.models import Birthday, User
 
-from django.template import Context, loader
 from django.http import HttpResponse
 from django.http import Http404
 
+from django.shortcuts import render_to_response
+
+
 import datetime
+
 from helper import is_int
+from reminderduration import month_to_index
+from reminderduration import index_to_month
+
+
+def index(request):
+  """
+  Returns an acknowledgement if birthday is created given:
+    login
+    last_letter
+    voice_name_url
+    date
+    reminder_duration
+
+  Returns error if any of the data is invalid
+  """
+  # Get request parameters
+  print 'REQUEST: ',request.body, request.GET
+  
+  request_login = request.GET['login']
+  request_last_letter = request.GET['last_letter']
+  request_voice_name_url = request.GET['voice_name_url']
+  request_month = month_to_index(request.GET['month'])
+  request_day = int(request.GET['day'])
+  request_reminder_delta = request.GET['reminder_delta']
+
+  # Retrieve user based on login, or raise error.
+  try:
+    u = User.objects.get(login=request_login)
+  # Handle incorrect login.
+  except User.DoesNotExist:
+      raise Http404('Login: ' + str(request_login) + 'not found')
+
+  # Create new birthday
+  d = datetime.date(year = 2012,
+                       month = request_month,
+                       day = request_day)
+  b = Birthday(user = u,
+               last_letter = request_last_letter,
+               voice_name_url = request_voice_name_url,
+               date = d,
+               reminder_delta = request_reminder_delta)
+
+  # Save new birthday
+  month = index_to_month(b.date.month)
+  day = b.date.day
+  return render_to_response('birthdays/index.xml', 
+                            {'name': b.voice_name_url,
+                             'letter': b.last_letter,
+                             'month': month,
+                             'day': day,
+                             'reminder': b.reminder_delta})
+
 
 def login(request):
   """
@@ -90,9 +145,9 @@ def add_birthday(request):
   request_login = request.GET['login']
   request_last_letter = request.GET['last_letter']
   request_voice_name_url = request.GET['voice_name_url']
-  request_month = int(request.GET['month'])
+  request_month = month_to_index(request.GET['month'])
   request_day = int(request.GET['day'])
-  request_reminder_delta = int(request.GET['reminder_delta'])
+  request_reminder_delta = request.GET['reminder_delta']
 
   # Retrieve user based on login, or raise error.
   try:
@@ -248,8 +303,8 @@ def get_birthdays_pick(request):
   # Get birthdays from user using query
   birthdays = get_birthdays(u, request_birthday_query)
 
-  # If request_num != -1, return specific birthday id
-  if request_birthday_num != -1:
+  # If request_num != 0, return specific birthday id
+  if request_birthday_num != 0:
     b = list(birthdays)[request_birthday_num]
     return HttpResponse('Pick birthday : ' + str(b.id))
 
