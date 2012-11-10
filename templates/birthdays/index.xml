@@ -1,33 +1,33 @@
 <ANGELXML>
 	
-	<MESSAGE>
+<MESSAGE>
 
-     <PLAY>
-     	
-     	<PROMPT type="text">
-     		I have a birthday for 
-     	</PROMPT>
+ <PLAY>
 
-     	<PROMPT type="externalaudio">
-     		{{name}}
-     	</PROMPT>
-     	
-     	<PROMPT type="text">
-     		 with last letter {{letter}} on {{month}} {{day}}
-     		with a {{reminder}} reminder. 
-     	</PROMPT>
-     	
-     </PLAY>
+<PROMPT type="text">
+I have a birthday for 
+</PROMPT>
 
-     <GOTO destination="/1000_Welcome"/>
+<PROMPT type="externalaudio">
+{{name}}
+</PROMPT>
 
-    </MESSAGE>
+<PROMPT type="text">
+with last letter {{letter}} on {{month}} {{day}}
+with a {{reminder}} reminder. 
+</PROMPT>
+ 	
+</PLAY>
 
-    <VARIABLES>
+<GOTO destination="/1000_Welcome"/>
 
-      	<VAR name="birthday_id" value="10"/>
+</MESSAGE>
 
-	</VARIABLES>
+<VARIABLES>
+
+<VAR name="birthday_id" value="10"/>
+
+</VARIABLES>
 
 </ANGELXML>
 
