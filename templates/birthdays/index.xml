@@ -19,7 +19,7 @@
  	
 	</PLAY>
 
-	<GOTO destination="/1000_Welcome"/>
+	<GOTO destination="1000_Welcome"/>
 
 	</MESSAGE>
 
