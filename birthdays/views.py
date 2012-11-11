@@ -83,14 +83,16 @@ def login(request):
     if u.pin != int(request_pin):
       print u.pin
       print request_pin
-      raise Http404('Incorrect pin: ' + str(request_pin))
-  # Handle incorrect login.
+      return render_to_response('birthdays/login_fail.xml', 
+                              {'reason':'pin'
+                               'num':u.pin})  # Handle incorrect login.
   except User.DoesNotExist:
-      raise Http404('Login: ' + str(request_login) + 'not found')
-  
-  # return render_to_response('birthdays/login.html', {'login': u.login})
-  return HttpResponse('Successful login! ' + str(u))
-
+      return render_to_response('birthdays/login_fail.xml', 
+                              {'reason':'login'
+                               'num':u.login})  # Handle incorrect login.
+        
+  return render_to_response('birthdays/login.xml', 
+                            {'login':u.login})
 
 def new_user(request):
   """
@@ -261,6 +263,38 @@ def get_birthdays_list(request):
 
   # Get birthdays from user using query
   birthdays = get_birthdays(u, request_birthday_query)
+   
+  s = ''
+  for b in birthdays:
+    s += str(b) + '\n'
+  return HttpResponse('Get birthdays : ' + s)
+
+
+def get_reminders(request):
+  """
+  Returns a list of birthdays that fit the given query:
+    loginID
+    birthday_querey
+
+  If no birthdays are found, returns empty list.
+  If user does not exist, returns error.
+  """
+  # Get request parameters
+  print 'REQUEST: ',request.body, request.GET
+  
+  request_login = request.GET['login']
+
+  # Retrieve user based on login, or raise error.
+  try:
+    u = User.objects.get(login=request_login)
+  # Handle incorrect login.
+  except User.DoesNotExist:
+      raise Http404('Login: ' + str(request_login) + 'not found')
+
+  # Get all the birthdays
+  birthdays = get_birthdays(u, 'all')
+  # Filter out only those that have reminders
+  birthdays = [b for b in birthdays if b.is_reminder()]
    
   s = ''
   for b in birthdays:

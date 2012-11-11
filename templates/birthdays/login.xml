@@ -1,0 +1,24 @@
+<ANGELXML>
+	
+	<MESSAGE>
+
+	<PLAY>
+
+		<PROMPT type="text">
+			Welcome user {{login}}. 
+		</PROMPT>
+ 	
+	</PLAY>
+
+	<GOTO destination="/21" />
+
+	</MESSAGE>
+
+	<VARIABLES>
+
+		<VAR name="login" value=" {{login}} "/>
+
+	</VARIABLES>
+
+</ANGELXML>
+
