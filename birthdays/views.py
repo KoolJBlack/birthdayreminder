@@ -341,12 +341,14 @@ def get_birthdays_pick(request):
   # If request_num != 0, return specific birthday id
   if request_birthday_num != 0:
     b = list(birthdays)[request_birthday_num]
-    return HttpResponse('Pick birthday : ' + str(b.id))
+    return render_to_response('birthdays/pick.xml', 
+                             {'birthday':b})  
 
-  s = ''
-  for b in birthdays:
-    s += str(b) + '\n'
-  return HttpResponse('Pick birthdays : ' + s)
+  # Just list the birthdays like normal until the user picks one.
+  num_birthdays = len(birthdays)
+  return render_to_response('birthdays/list.xml', 
+                           {'birthdays':birthdays,
+                            'num_birthdays':num_birthdays})  
 
 
 def update_reminder(request):
