@@ -274,11 +274,9 @@ def get_birthdays_list(request):
 
 def get_reminders(request):
   """
-  Returns a list of birthdays that fit the given query:
+  Returns a list of birthdays with reminders for user:
     loginID
-    birthday_querey
 
-  If no birthdays are found, returns empty list.
   If user does not exist, returns error.
   """
   # Get request parameters
@@ -295,14 +293,15 @@ def get_reminders(request):
 
   # Get all the birthdays
   birthdays = get_birthdays(u, 'all')
+  
   # Filter out only those that have reminders
   birthdays = [b for b in birthdays if b.is_reminder()]
+  num_birthdays = len(birthdays)
    
-  s = ''
-  for b in birthdays:
-    s += str(b) + '\n'
-  return HttpResponse('Get birthdays : ' + s)
-
+  return render_to_response('birthdays/reminders.xml', 
+                           {'birthdays':birthdays,
+                            'num_birthdays':num_birthdays})  
+  
 
 def get_birthdays_pick(request):
   """

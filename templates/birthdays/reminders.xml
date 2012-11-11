@@ -1,0 +1,34 @@
+<ANGELXML>
+	
+	<MESSAGE>
+
+	<PLAY>
+
+		<PROMPT type="text">
+			You have {{num_birthdays}} reminders.
+		</PROMPT>
+
+{% for b in birthdays %}
+
+		<PROMPT type="text">
+			Reminder {{forloop.counter}} is for
+		</PROMPT>
+
+		<PROMPT type="externalaudio">
+			{{b.voice_name_url}}
+		</PROMPT>
+
+		<PROMPT type="text">
+			with birthday on {{b.month_name}} {{b.date.day}}. 
+		</PROMPT>
+
+{% endfor %}
+
+	</PLAY>
+
+	<GOTO destination="/14" />
+
+	</MESSAGE>
+
+</ANGELXML>
+

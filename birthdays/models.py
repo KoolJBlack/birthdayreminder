@@ -4,6 +4,8 @@ from django.utils import timezone
 from reminderduration import durations  # Table for determining reminder durations.
 from django.db import models
 
+from reminderduration import index_to_month
+
 
 class User(models.Model):
   login = models.PositiveIntegerField()
@@ -32,6 +34,9 @@ class Birthday(models.Model):
 
   def is_month(self, month):
     return self.date.month == month
+
+  def month_name(self):
+    return index_to_month(self.date.month)
 
   def __unicode__(self):
     return 'Birthday:' + self.last_letter + '  date:' + str(self.date) + '  dur:' + str(durations[self.reminder_delta])
