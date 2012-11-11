@@ -16,7 +16,7 @@
 
 	<VARIABLES>
 
-		<VAR name="login" value=" {{login}} "/>
+		<VAR name="login" value="{{login}}"/>
 
 	</VARIABLES>
 

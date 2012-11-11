@@ -84,12 +84,12 @@ def login(request):
       print u.pin
       print request_pin
       return render_to_response('birthdays/login_fail.xml', 
-                              {'reason':'pin'
+                              {'reason':'pin',
                                'num':u.pin})  # Handle incorrect login.
   except User.DoesNotExist:
       return render_to_response('birthdays/login_fail.xml', 
-                              {'reason':'login'
-                               'num':u.login})  # Handle incorrect login.
+                              {'reason':'login',
+                               'num':request_login})  # Handle incorrect login.
         
   return render_to_response('birthdays/login.xml', 
                             {'login':u.login})
