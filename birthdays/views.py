@@ -346,7 +346,7 @@ def get_birthdays_pick(request):
 
   # Just list the birthdays like normal until the user picks one.
   num_birthdays = len(birthdays)
-  return render_to_response('birthdays/list.xml', 
+  return render_to_response('birthdays/listpick.xml', 
                            {'birthdays':birthdays,
                             'num_birthdays':num_birthdays})  
 
