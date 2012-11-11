@@ -5,7 +5,7 @@
 	<PLAY>
 
 		<PROMPT type="text">
-			I have a birthday for 
+			This is the site saying I have a birthday for 
 		</PROMPT>
 
 		<PROMPT type="externalaudio">
@@ -19,7 +19,7 @@
  	
 	</PLAY>
 
-	<GOTO destination="1000_Welcome"/>
+	<GOTO destination="/12" />
 
 	</MESSAGE>
 
