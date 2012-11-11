@@ -22,7 +22,7 @@ class Birthday(models.Model):
   last_letter = models.CharField(max_length=1)
   voice_name_url = models.URLField(max_length=500)
   date = models.DateField('birthday date')
-  reminder_delta = models.PositiveIntegerField()
+  reminder_delta = models.CharField(max_length=10)
 
   def is_reminder(self):
     """Returns true when a birthday has a reminder."""
