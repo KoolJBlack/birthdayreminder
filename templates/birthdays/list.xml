@@ -1,0 +1,35 @@
+<ANGELXML>
+	
+	<MESSAGE>
+
+	<PLAY>
+
+		<PROMPT type="text">
+			I found {{num_birthdays}} birthdays from your selection.
+		</PROMPT>
+
+{% for b in birthdays %}
+
+		<PROMPT type="text">
+			Birthday {{forloop.counter}} is for
+		</PROMPT>
+
+		<PROMPT type="externalaudio">
+			{{b.voice_name_url}}
+		</PROMPT>
+
+		<PROMPT type="text">
+			with birthday on {{b.month_name}} {{b.date.day}}
+			and a reminder of {{b.reminder_delta}}. 
+		</PROMPT>
+
+{% endfor %}
+
+	</PLAY>
+
+	<GOTO destination="/14" />
+
+	</MESSAGE>
+
+</ANGELXML>
+

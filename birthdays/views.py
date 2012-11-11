@@ -265,11 +265,11 @@ def get_birthdays_list(request):
 
   # Get birthdays from user using query
   birthdays = get_birthdays(u, request_birthday_query)
+  num_birthdays = len(birthdays)
    
-  s = ''
-  for b in birthdays:
-    s += str(b) + '\n'
-  return HttpResponse('Get birthdays : ' + s)
+  return render_to_response('birthdays/list.xml', 
+                           {'birthdays':birthdays,
+                            'num_birthdays':num_birthdays})  
 
 
 def get_reminders(request):
