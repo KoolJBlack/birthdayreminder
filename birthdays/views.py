@@ -116,10 +116,11 @@ def new_user(request):
   try:
     u = User.objects.get(login=request_login)
     # If we've reached this point, the login is already used.
-    raise Http404('Login unavailable: ' + str(request_login))
-  # Login does not exist, so move on.
+    return render_to_response('birthdays/new_fail.xml', 
+                            {'num':request_login})  # Handle incorrect login.  # Login does not exist, so move on
   except User.DoesNotExist:
-      pass
+    # The login is free, so move on.
+    pass
   
   # Create new user with login and pin
   u = User(login=request_login, pin=request_pin)
@@ -127,7 +128,8 @@ def new_user(request):
   # Save new user to database
   u.save()
   
-  return HttpResponse('Successful new user! ' + str(u))
+  return render_to_response('birthdays/new.xml', 
+                          {'login':u.login})  # Handle incorrect login.  # Login does not exist, so move on
 
 
 def add_birthday(request):

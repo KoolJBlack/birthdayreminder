@@ -1,0 +1,19 @@
+<ANGELXML>
+	
+	<MESSAGE>
+
+	<PLAY>
+
+		<PROMPT type="text">
+			I sorry, login {{num}} is already in use. 
+			Please try again.
+		</PROMPT>
+ 	
+	</PLAY>
+
+	<GOTO destination="/18" />
+
+	</MESSAGE>
+
+</ANGELXML>
+
