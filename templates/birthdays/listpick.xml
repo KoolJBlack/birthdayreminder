@@ -43,15 +43,13 @@
 		
 		<KEYWORD>
 			
-{% for b in birthdays %}
-	
+{% for b in birthdays %}	
 		<LINK keyword="{{forloop.counter}}"
 			dtmf="{{forloop.counter}}"
 			returnValue="{{b.id}}"
-			destination = "/28">
+			destination = "/28"/>
 
 {% endfor %}
-
 		</KEYWORD>
 
 		
