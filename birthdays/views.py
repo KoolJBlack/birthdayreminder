@@ -5,6 +5,7 @@ from django.http import Http404
 
 from django.shortcuts import render_to_response
 
+from reminderduration import months  # Table for getting the numeric value of a month
 
 import datetime
 
@@ -215,10 +216,10 @@ def get_birthdays(u, request_birthday_query):
   # Get birthdays from user using query
   try:
     
-    if (is_int(request_birthday_query)):
-      print 'Its int'
+    if (request_birthday_query in months):
+      print 'Its month'
       # If request_birthday_query is int, filter by month,
-      request_birthday_query = int(request_birthday_query)
+      request_birthday_query = months[request_birthday_query]
       birthdays = u.birthday_set.all()
       birthdays = filter(lambda x: x.is_month(request_birthday_query),
                          birthdays)

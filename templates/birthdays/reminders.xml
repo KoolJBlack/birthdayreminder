@@ -19,7 +19,7 @@
 		</PROMPT>
 
 		<PROMPT type="text">
-			with birthday on {{b.month_name}} {{b.date.day}}. 
+			with birthday on {{b.month_name}} a {{b.date.day}}. 
 		</PROMPT>
 
 {% endfor %}

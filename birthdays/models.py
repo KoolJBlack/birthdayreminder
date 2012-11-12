@@ -2,6 +2,9 @@ import datetime
 
 from django.utils import timezone
 from reminderduration import durations  # Table for determining reminder durations.
+from reminderduration import months  # Table for getting the numeric value of a month
+
+
 from django.db import models
 
 from reminderduration import index_to_month
