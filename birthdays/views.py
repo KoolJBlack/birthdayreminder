@@ -173,7 +173,7 @@ def add_birthday(request):
   # Save new birthday
   b.save()
   
-  return HttpResponse('Birthday added! ' + str(b))
+  return render_to_response('birthdays/add.xml')
 
 
 def delete_birthday(request):
