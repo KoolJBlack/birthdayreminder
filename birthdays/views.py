@@ -296,7 +296,7 @@ def get_birthdays_pick(request):
   
   request_login = request.GET['login']
   request_birthday_query = request.GET['birthday_query']
-  request_birthday_num = int(request.GET['birthday_num'])
+  #request_birthday_num = int(request.GET['birthday_num'])
 
   # Retrieve user based on login, or raise error.
   try:
@@ -309,11 +309,12 @@ def get_birthdays_pick(request):
   birthdays = get_birthdays(u, request_birthday_query)
 
   # If request_num != 0, return specific birthday id
+"""
   if request_birthday_num != 0:
     b = list(birthdays)[request_birthday_num]
     return render_to_response('birthdays/pick.xml', 
                              {'birthday':b})  
-
+"""
   # Just list the birthdays like normal until the user picks one.
   num_birthdays = len(birthdays)
   return render_to_response('birthdays/listpick.xml', 
