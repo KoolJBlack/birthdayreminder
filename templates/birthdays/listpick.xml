@@ -32,8 +32,7 @@
 		<PROMPT type="text">
 			Please enter the index of the birthday you want to update 
 			on your phone's keypad. If you didn't hear the birthday 
-			of interest, say 'repeat' and I'll read them back to you. 
-			Alternatively, you can say 'back' to choose a birthday a 
+			of interest, you can say 'back' to choose a birthday a 
 			different way.
 		</PROMPT>	
 
@@ -41,7 +40,11 @@
 
 	<RESPONSE>
 		
-		<KEYWORD>
+		<KEYWORD
+
+		<LINK keyword="back"
+			returnValue="0"
+			destination = "/23"/>
 			
 {% for b in birthdays %}	
 		<LINK keyword="{{forloop.counter}}"
