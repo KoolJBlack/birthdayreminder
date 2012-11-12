@@ -207,7 +207,7 @@ def delete_birthday(request):
   # Delete the birthday
   b.delete()
   
-  return HttpResponse('Birthday deleted! ' + str(b))
+  return render_to_response('birthdays/delete.xml')
 
 
 def get_birthdays(u, request_birthday_query):
@@ -269,38 +269,7 @@ def get_birthdays_list(request):
    
   return render_to_response('birthdays/list.xml', 
                            {'birthdays':birthdays,
-                            'num_birthdays':num_birthdays})  
-
-
-def get_reminders(request):
-  """
-  Returns a list of birthdays with reminders for user:
-    loginID
-
-  If user does not exist, returns error.
-  """
-  # Get request parameters
-  print 'REQUEST: ',request.body, request.GET
-  
-  request_login = request.GET['login']
-
-  # Retrieve user based on login, or raise error.
-  try:
-    u = User.objects.get(login=request_login)
-  # Handle incorrect login.
-  except User.DoesNotExist:
-      raise Http404('Login: ' + str(request_login) + 'not found')
-
-  # Get all the birthdays
-  birthdays = get_birthdays(u, 'all')
-  
-  # Filter out only those that have reminders
-  birthdays = [b for b in birthdays if b.is_reminder()]
-  num_birthdays = len(birthdays)
-   
-  return render_to_response('birthdays/reminders.xml', 
-                           {'birthdays':birthdays,
-                            'num_birthdays':num_birthdays})  
+                            'num_birthdays':num_birthdays})    
   
 
 def get_birthdays_pick(request):
@@ -362,7 +331,7 @@ def update_reminder(request):
   """
   request_login = request.GET['login']
   request_birthday_id = request.GET['birthday_id']
-  request_reminder_delta = int(request.GET['reminder_delta'])
+  request_reminder_delta = request.GET['reminder_delta']
 
   # Retrieve user based on login, or raise error.
   try:
@@ -382,4 +351,36 @@ def update_reminder(request):
   b.reminder_delta = request_reminder_delta
   b.save()
   
-  return HttpResponse('Birthday updated! ' + str(b))
+  return render_to_response('birthdays/update.xml',
+                            {'reminder':b.reminder_delta})
+
+
+def get_reminders(request):
+  """
+  Returns a list of birthdays with reminders for user:
+    loginID
+
+  If user does not exist, returns error.
+  """
+  # Get request parameters
+  print 'REQUEST: ',request.body, request.GET
+  
+  request_login = request.GET['login']
+
+  # Retrieve user based on login, or raise error.
+  try:
+    u = User.objects.get(login=request_login)
+  # Handle incorrect login.
+  except User.DoesNotExist:
+      raise Http404('Login: ' + str(request_login) + 'not found')
+
+  # Get all the birthdays
+  birthdays = get_birthdays(u, 'all')
+  
+  # Filter out only those that have reminders
+  birthdays = [b for b in birthdays if b.is_reminder()]
+  num_birthdays = len(birthdays)
+   
+  return render_to_response('birthdays/reminders.xml', 
+                           {'birthdays':birthdays,
+                            'num_birthdays':num_birthdays})
