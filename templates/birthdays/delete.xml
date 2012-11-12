@@ -1,0 +1,18 @@
+<ANGELXML>
+	
+	<MESSAGE>
+
+	<PLAY>
+
+		<PROMPT type="text">
+			Birthday deleted. 
+		</PROMPT>
+ 	
+	</PLAY>
+
+	<GOTO destination="/23" />
+
+	</MESSAGE>
+
+</ANGELXML>
+

@@ -1,0 +1,18 @@
+<ANGELXML>
+	
+	<MESSAGE>
+
+	<PLAY>
+
+		<PROMPT type="text">
+			Reminder updated to a {{reminder}}. 
+		</PROMPT>
+ 	
+	</PLAY>
+
+	<GOTO destination="/23" />
+
+	</MESSAGE>
+
+</ANGELXML>
+
