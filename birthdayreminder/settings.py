@@ -6,7 +6,7 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     ('kacquah', 'kacquah@mit.edu'),
 )
-
+"""
 MANAGERS = ADMINS
 DATABASES = {
     'default': {
@@ -29,7 +29,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-"""
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -117,8 +117,8 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     #'/afs/athena.mit.edu/users/k/a/kacquah/Code/birthdayreminder/templates',
-    '/afs/athena.mit.edu/user/k/a/kacquah/Scripts/django/birthdayreminder/templates'
-
+    #'/afs/athena.mit.edu/user/k/a/kacquah/Scripts/django/birthdayreminder/templates'
+    '/home/kojo/Code/birthdayreminder/templates',
 )
 
 INSTALLED_APPS = (
