@@ -32,8 +32,8 @@ class Birthday(models.Model):
   def is_reminder(self):
     """Returns true when a birthday has a reminder."""
     self.date = self.date.replace(year=timezone.now().year)
-    return self.date >= timezone.now().date() - durations[self.reminder_delta]  and \
-           self.date <= timezone.now().date()
+    return timezone.now().date() >= self.date - durations[self.reminder_delta]  and \
+           timezone.now().date() <= self.date
 
   def is_month(self, month):
     return self.date.month == month
