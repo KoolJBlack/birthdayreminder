@@ -10,5 +10,4 @@ urlpatterns = patterns('birthdays.views',
   url(r'^pick/$', 'get_birthdays_pick'),
   url(r'^update/$', 'update_reminder'),
   url(r'^reminders/$', 'get_reminders'),
-  url(r'^reminders/$', 'get_reminders'),
 )
