@@ -1,0 +1,19 @@
+<ANGELXML>
+	
+	<MESSAGE>
+
+	<PLAY>
+
+		<PROMPT type="text">
+			I'm sorry, I did not find any birthdays from your
+			selection.
+		</PROMPT>
+ 	
+	</PLAY>
+
+	<GOTO destination="/23" />
+
+	</MESSAGE>
+
+</ANGELXML>
+

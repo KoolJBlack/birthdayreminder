@@ -6,7 +6,6 @@
 
 		<PROMPT type="text">
 			I found {{num_birthdays}} birthdays from your selection.
-{% if num_birthdays %}
 		    I'll read each birthday to you starting with its
 		    birthday number. To select a birthday, simply enter the
 		    corresponding birthday number into your phone's keypad.
@@ -35,7 +34,6 @@
 		    If you didn't hear the birthday 
 			of interest, you can say 'back' to choose a birthday a 
 			different way.
-{% endif %}
 
 		</PROMPT>	
 

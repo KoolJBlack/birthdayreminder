@@ -311,10 +311,13 @@ def get_birthdays_pick(request):
 
   # Just list the birthdays like normal until the user picks one.
   num_birthdays = len(birthdays)
-  return render_to_response('birthdays/listpick.xml', 
-                           {'birthdays':birthdays,
-                            'num_birthdays':num_birthdays})  
-
+  if num_birthdays:
+    return render_to_response('birthdays/listpick.xml', 
+                             {'birthdays':birthdays,
+                              'num_birthdays':num_birthdays})
+  else:
+    return render_to_response('birthdays/no_found.xml',)
+    
 
 def update_reminder(request):
   """
