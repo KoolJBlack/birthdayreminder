@@ -6,10 +6,10 @@
 
 		<PROMPT type="text">
 			I found {{num_birthdays}} birthdays from your selection.
-		    I'll read them to you one by one starting with the first 
-		    birthday. To select a birthday, enter the corresponding birthday 
-		    index into your phone's keypad. You'll hear the birthday index 
-		    at the beginning of every birthday.
+{% if num_birthdays %}
+		    I'll read each birthday to you starting with its
+		    birthday number. To select a birthday, simply enter the
+		    corresponding birthday number into your phone's keypad.
 		</PROMPT>
 
 {% for b in birthdays %}
@@ -24,16 +24,19 @@
 
 		<PROMPT type="text">
 			with birthday on {{b.month_name}} {{b.date.day}}
-			and a reminder of {{b.reminder_delta}}. 
+			and a reminder of a {{b.reminder_delta}}. 
 		</PROMPT>
 
 {% endfor %}
 
 		<PROMPT type="text">
-			Please enter the index of the birthday you want to update 
-			on your phone's keypad. If you didn't hear the birthday 
+			To select a birthday, simply enter the
+		    corresponding birthday number into your phone's keypad.
+		    If you didn't hear the birthday 
 			of interest, you can say 'back' to choose a birthday a 
 			different way.
+{% endif %}
+
 		</PROMPT>	
 
 	</PLAY>
