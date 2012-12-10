@@ -31,7 +31,8 @@ class Birthday(models.Model):
 
   def is_reminder(self):
     """Returns true when a birthday has a reminder."""
-    self.date = self.date.replace(year=timezone.now().year)
+    if timezone.now().year > self.date.year:
+      self.date = self.date.replace(year=timezone.now().year)
     return timezone.now().date() >= self.date - durations[self.reminder_delta]  and \
            timezone.now().date() <= self.date
 
