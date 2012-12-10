@@ -51,7 +51,7 @@
 		<LINK keyword="{{forloop.counter}}"
 			dtmf="{{forloop.counter}}"
 			returnValue="{{b.id}}"
-			destination = "/28"/>
+			destination = "/10"/>
 
 {% endfor %}
 		</KEYWORD>
