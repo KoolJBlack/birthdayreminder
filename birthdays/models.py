@@ -1,6 +1,7 @@
 import datetime
 
 from django.utils import timezone
+from dateutil.relativedelta import relativedelta
 from reminderduration import durations  # Table for determining reminder durations.
 from reminderduration import months  # Table for getting the numeric value of a month
 
@@ -31,10 +32,13 @@ class Birthday(models.Model):
 
   def is_reminder(self):
     """Returns true when a birthday has a reminder."""
-    if timezone.now().year > self.date.year:
-      self.date = self.date.replace(year=timezone.now().year)
-    return timezone.now().date() >= self.date - durations[self.reminder_delta]  and \
-           timezone.now().date() <= self.date
+    self.date = self.date.replace(year=timezone.now().year)
+    thisyear = self.date
+    nextyear = self.data + relativedelta(year=1)
+    return timezone.now().date() >= thisyear - durations[self.reminder_delta]  and \
+           timezone.now().date() <= thisyear or\
+           timezone.now().date() >= nextyear - durations[self.reminder_delta]  and \
+           timezone.now().date() <= nextyear
 
   def is_month(self, month):
     return self.date.month == month
