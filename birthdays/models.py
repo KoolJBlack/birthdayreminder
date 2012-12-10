@@ -34,7 +34,7 @@ class Birthday(models.Model):
     """Returns true when a birthday has a reminder."""
     self.date = self.date.replace(year=timezone.now().year)
     thisyear = self.date
-    nextyear = self.data + timedelta(years=1)
+    nextyear = self.date.replace(year=timezone.now().year + 1)
     return timezone.now().date() >= thisyear - durations[self.reminder_delta]  and \
            timezone.now().date() <= thisyear or \
            timezone.now().date() >= nextyear - durations[self.reminder_delta]  and \
